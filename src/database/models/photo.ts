@@ -10,9 +10,10 @@ const photoSchema = new Schema(
       type: String,
       required: true,
     },
-    url: {
-      type: String,
+    urls: {
+      type: [String],
       required: true,
+      default: [],
     },
     sectionId: {
       type: Schema.Types.ObjectId,
