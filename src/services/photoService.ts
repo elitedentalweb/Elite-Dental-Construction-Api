@@ -20,7 +20,7 @@ export const updatePhoto = async (id: string, body: UpdatePhoto) => {
   if (!photo) return null;
 
   if (body.title !== undefined) photo.title = body.title;
-  if (body.url !== undefined) photo.url = body.url;
+  if (body.urls !== undefined) photo.urls = body.urls;
   if (body.description !== undefined) photo.description = body.description;
   if (body.sectionId !== undefined) {
     const sectionExists = await SectionCollection.exists({
@@ -32,10 +32,8 @@ export const updatePhoto = async (id: string, body: UpdatePhoto) => {
     photo.sectionId = body.sectionId as any;
   }
   const saved = await photo.save();
-
   return saved;
 };
-
 export const deletePhoto = async (id: string) => {
   return PhotoCollection.findByIdAndDelete(id);
 };

@@ -9,6 +9,7 @@ export interface UpdatePhoto {
   title?: string;
   description?: string;
   urls?: string[];
+  sectionId?: string;
 }
 
 export interface PhotoResponse {
