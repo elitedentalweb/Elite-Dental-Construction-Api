@@ -16,11 +16,12 @@ export const registerUserController: RequestHandler = async (
   next,
 ) => {
   try {
-    const { email, password, nickname, adminCode } = req.body as {
+    const { email, password, nickname, adminCode, inviteToken } = req.body as {
       email: string;
       password: string;
       nickname?: string;
       adminCode?: string;
+      inviteToken?: string;
     };
 
     const result = await authServices.registerUserService({
@@ -28,6 +29,7 @@ export const registerUserController: RequestHandler = async (
       password,
       nickname,
       adminCode,
+      inviteToken,
     });
 
     res.status(201).json(result);
@@ -109,6 +111,37 @@ export const refreshController: RequestHandler = async (req, res, next) => {
     });
 
     res.status(200).json({ accessToken: session.accessToken });
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const resetPasswordController: RequestHandler = async (
+  req,
+  res,
+  next,
+) => {
+  try {
+    const { token, newPassword } = req.body as {
+      token: string;
+      newPassword: string;
+    };
+    const result = await authServices.resetPasswordService(token, newPassword);
+    res.status(200).json(result);
+  } catch (err) {
+    next(err);
+  }
+};
+
+export const forgotPasswordController: RequestHandler = async (
+  req,
+  res,
+  next,
+) => {
+  try {
+    const { email } = req.body as { email: string };
+    const result = await authServices.forgotPasswordService(email);
+    res.status(200).json(result);
   } catch (err) {
     next(err);
   }
